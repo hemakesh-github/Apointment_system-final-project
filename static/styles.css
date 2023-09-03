@@ -1,0 +1,40 @@
+header {
+    max-height: 13vh;
+    box-shadow: 0 1px 20px 0 rgba(0,0,0,.14);
+    display: flex;
+}
+#nav {
+    display: flex;
+    gap: 1em;
+    justify-content: right;
+    align-items: center;
+    text-decoration: none;
+    height : 13vh;
+    padding: 0px;
+    margin: 0cm 1cm 0cm 0cm;
+}
+
+#name{
+    padding: 10px;
+    color :blue;
+}
+
+#right {
+    padding: 40px 0px 40px 0px;
+    margin-top: 60px;
+}
+
+#brand {
+    padding-top: 10px;
+}
+
+#left {
+    display: flex;
+    justify-content: flex-end;
+}
+
+a {
+    text-decoration: none;
+    display: flex;
+    justify-content: flex-start;
+}
