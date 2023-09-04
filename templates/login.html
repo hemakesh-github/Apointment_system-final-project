@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block main %}
+    <div class = "form-box">
+        <form id = "login" action = "/login" method="post">
+            <div>
+                {{x}}<br>
+                <label for = "username">Username</label>
+                <input type = "text" class = "form-control" name = "username" required>
+                <br>
+                <label for = "password">Password</label>
+                <input type = "password" class = "form-control" name = "password">
+                <br>
+                <button type = "submit" class = "form-control" required>Login</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

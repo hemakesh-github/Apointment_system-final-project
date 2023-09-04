@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block main %}
+    <div class = "form-box">
+        <form id = "login" action = "/register" method="post">
+            <div>
+                <label for="username">Username</label>
+                <input type = "text" class = "form-control" name = "username">
+                <label for = "email">E-Mail address</label>
+                <input type = "email" class = "form-control" name = "email" required>
+                <br>
+                <label for = "password">Password</label>
+                <input type = "password" class = "form-control" name = "password">
+                <br>
+                <label for = "confirm">Confirm Password</label>
+                <input type = "password" class = "form-control" name = "confirm" required>
+                <br>
+                <button type = "submit" class = "form-control" required>Register</button>
+                {{x}}
+            </div>
+        </form>
+    </div>
+{% endblock %}

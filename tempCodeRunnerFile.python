@@ -1,0 +1,5 @@
+import sqlite3
+
+connection = sqlite3.connect('hi.db')
+
+db = connection.execute(''' CREATE TABLE IF NOT EXISTS hi(name TEXT, msg TEXT)''')
