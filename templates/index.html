@@ -1,15 +1,16 @@
 {% extends "layout.html" %}
 {% block main %}
-<div class="container">
+<div class="container" id = "container">
     <div class = "row">
-    <section class="col d-flex" id = "right">
+    <section  class="col d-flex" id = "right">
         <image class = "align-items-center justify-content-center">
-            <img src ="static\appointment.svg" id = "image"/>
+            <img src ="static/appointment.svg" id = "image"/>
         </image>
     </section>
+
     <section class="col d-flex" id = "left">
         <div class="form-box d-flex justify-content-center align-items-center" >
-            <form style = "border: solid black 2px; padding: 40px; margin-top: 60px;">
+            <form action = "/book" method="post" id = "book" >
                 <div class="form-group">
                     <h4>Book an appointment</h4>
                     <br>
@@ -25,7 +26,7 @@
                     <label for = "date">Appointment Date:</label>
                     <input type="date" name="date" class="form-control" required>
                     <br>
-                    <button type="submit" class = "form-control" required>Schedule</button>
+                    <button type="submit" onclick="openPopup()" class = "form-control" required>Schedule</button>
                 </div>
                 <div>
                     <br>

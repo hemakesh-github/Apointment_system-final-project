@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href = "static\styles.css" rel = "stylesheet">
     <title>Document</title>
+
 </head>
 <body>
     <header class = "row" >
@@ -18,14 +19,30 @@
                 </a>
             </div>
         </div>
+        
         <nav id = "nav" class = "col">
-            <a class = "nav-link" href = "/login">Login</a>
-            <a class = "nav-link" href = "/register">Register</a>
+            {% if session.logged_in %}
+                <a class = "nav-link" href ="/logout">Logout</a>
+                <a class = "nav-link" href = "/history">History</a>
+                {% if session.userid == 1 %}
+                    <a class = "nav-link" href = "/admin">Admin</a>
+                {% endif %}
+                {% else %}
+                <a class = "nav-link" href = "/login">Login</a>
+                <a class = "nav-link" href = "/register">Register</a>
+            {% endif %}
         </nav>
         </div>
     </header>
     <main>
        {% block main %}{% endblock %}
     </main>
+   
+    {% if admin_alert %}
+        <script>
+            alert("YOU ARE NOT ADMIN");
+        </script>
+    {% endif %}
+    
 </body>
 </html>
