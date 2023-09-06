@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href = "static\styles.css" rel = "stylesheet">
     <title>Document</title>
+    <script src = "static\script.js"></script>
 
 </head>
 <body>
@@ -15,7 +16,7 @@
             <div>
                 <a href = "/index.html" id = "brand">
                     <img src = "static\images\logo1.png" style = "width: 11v; height: 11vh; display: inline;" alt = "Logo" >
-                    <h4 id = "name">Brand</br>Name</h4>
+                    <h4 id = "brand_name">Brand</br>Name</h4>
                 </a>
             </div>
         </div>
@@ -41,6 +42,12 @@
     {% if admin_alert %}
         <script>
             alert("YOU ARE NOT ADMIN");
+        </script>
+    {% endif %}
+
+    {% if logged_in %}
+        <script>
+            alert("YOU ARE NOT LOGGED IN");
         </script>
     {% endif %}
     

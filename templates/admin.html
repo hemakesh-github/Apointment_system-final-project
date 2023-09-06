@@ -5,38 +5,60 @@
         padding : 5px;
     }
 </style>
-
-    <section class = "container d-flex justify-content-center">
-    <div class="d-flex ">
-    <form name="available" action = "/admin" method = "post" style = "border: solid black 2px; padding: 0px; margin-top: 60px; width : 450px; height : auto;">
-        <table  class="table table-striped" >
-            <thead>
-                <tr>
-                    <th>DATES</th>
-                    <th style = "text-align: right;">AVAILABILTY</th>
-                </tr>
-            </thead>
-            <tbody >
-                {% for day in days %}
-                    <tr>
-                        <td>{{days[day]}}</td>
-                   
-                    
-                        <td style = "text-align: right; ">
-                            <label><input type = "checkbox" name = {{day}} value = {{days[day]}}> available</label>
+<div class = "row">
+    <section class = "container col d-flex justify-content-center">
+        <div class="d-flex ">
+            <form name="available" action = "/admin" method = "post" style = "border: solid black 2px; padding: 0px; margin-top: 60px; width : 450px; height : auto;">
+                <table  class="table table-striped" >
+                    <thead>
+                        <tr>
+                            <th>DATES</th>
+                            <th style = "text-align: right;">AVAILABILTY</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        {% for day in days %}
+                            <tr>
+                                <td>{{days[day]}}</td>
+                        
                             
-                        </td>
-                    </tr>
-                    
-                {% endfor %}
-            </tbody>
-        </table>
-        <div class = "d-flex justify-content-center">
-            <button type = "submit" class="btn btn-outline-success">Confirm</button>
+                                <td style = "text-align: right; ">
+                                    <label><input type = "checkbox" name = {{day}} value = {{days[day]}}> available</label>
+                                    
+                                </td>
+                            </tr>
+                            
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class = "d-flex justify-content-center">
+                    <button type = "submit" class="btn btn-outline-success">Confirm</button>
+                </div>
+                <br>
+            </form>
         </div>
-        <br>
-    </form>
-    </div>
     </section>
-
+    <section  class="col d-flex" >
+        <div class = "col d-flex align-items-center justify-content-center">           
+            <table class = "table table-striped" style = "border: solid black 2px; padding: 0px; margin-top: 60px; width : 450px; height : auto;" >
+                <form action = "/book" method="post">
+                    <thead>
+                        <tr>
+                            <th style = "text-align: center;"">Chosen Dates</th>
+                            
+                        </tr>
+                        <tbody>
+                            {% for day in avail_days %}
+                                <tr>
+                                    <td style = "text-align: center;"">{{day}}</td>
+                                    
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </thead>
+                </form>
+            </table>
+        </div>
+    </section>
+</div>
 {% endblock %}

@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block main %}
+<section class = "container d-flex justify-content-center">
+    <div class="d-flex " style = "border: solid black 2px; padding: 0px; margin-top: 60px; width : 450px; height : auto;">
+        <table  class="table table-striped" >
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th >Booked for</th>
+                    <th>Booked on</th>
+                </tr>
+            </thead>
+            <tbody >
+                {% for h in history %}
+                    <tr>
+                        <td>{{h[0]}}</td>
+                        <td>{{h[1]}}</td>
+                        <td>{{h[2]}}</td>
+                    </tr>
+                    
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </section>
+{% endblock %}

@@ -1,40 +1,63 @@
 {% extends "layout.html" %}
 {% block main %}
-<div class="container" id = "container">
-    <div class = "row">
-    <section  class="col d-flex" id = "right">
-        <image class = "align-items-center justify-content-center">
-            <img src ="static/appointment.svg" id = "image"/>
-        </image>
-    </section>
+    <div class="container" id = "container">
+        <div class = "row">
+            <section  class="col d-flex" id = "right">
+                <div id = "available" class = "col d-flex align-items-center justify-content-center">
+                    <table class = "table table-striped" id = "availability" >
+                        <form action = "/book" method="post">
+                        <thead>
+                            <tr>
+                                <td>Dates</td>
+                                <td>Schedule</td>
+                            </tr>
+                            <tbody>
+                                {% for day in avail_days %}
+                                    <tr>
+                                        <td>{{day}}</td>
+                                        <td><button type = "submit"  value = {{day}} name = "book">Book</button></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </thead>
+                    </form>
+                    </table>
+                    
+                    
+                </div>
+            </section>
 
-    <section class="col d-flex" id = "left">
-        <div class="form-box d-flex justify-content-center align-items-center" >
-            <form action = "/book" method="post" id = "book" >
-                <div class="form-group">
-                    <h4>Book an appointment</h4>
-                    <br>
-                    <label for = "email">E-Mail address</label>
-                    <input type = "email" class="form-control" name = "email" required>
-                    <br>
-                    <label fot = "name">Name</label>
-                    <input type = "text" name = "name" class = "form-control" required>
-                    <br>
-                    <label for="phno">Phone number</label>
-                    <input type="tel" name="phno" class = "form-control" required>
-                    <br>
-                    <label for = "date">Appointment Date:</label>
-                    <input type="date" name="date" class="form-control" required>
-                    <br>
-                    <button type="submit" onclick="openPopup()" class = "form-control" required>Schedule</button>
+            {% if visibility %}
+                <script>
+                    var availability = document.getElementById("availability");
+                    availability.style.visibility = 'visible';
+                </script>
+            {% endif %}
+        
+            <section class="col d-flex" id = "left">
+                <div class="form-box d-flex justify-content-center align-items-center" >
+                    <form action = "/available" method="post" id = "book_form" class = "book_form">
+                        <div class="form-group">
+                            <h4>Book an appointment</h4>
+                            <br>
+                            <label for = "name">Name</label>
+                            <input type = "text" name = "name" id = "booking_name" class = "form-control" required>
+                            <br>
+                            <label for = "email">E-Mail address</label>
+                            <input type = "email" id = "email" class="form-control" name = "email" required>
+                            <br>
+                            <label for="phno">Phone number</label>
+                            <input type="tel" name="phno" id = "phno" class = "form-control" required>
+                            <br>
+                            <button type="submit" class = "form-control" id="check" >Check availability</button>  
+                        </div>
+                        <div>
+                            <br>
+                            <h6>*Login to see all your appointment</h6>
+                        </div>
+                    </form>
                 </div>
-                <div>
-                    <br>
-                    <h6>*Login to see all your appointment</h6>
-                </div>
-            </form>
+            </section>
         </div>
-    </section>
-</div>
-</div>
+    </div>
 {% endblock %}
