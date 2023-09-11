@@ -3,7 +3,15 @@
     <div class = "form-box">
         <form id = "login" action = "/login" method="post">
             <div>
-                {{x}}<br>
+                <br>
+                <img src = "static/images/login.png" id = "login_img">
+                {% if x %}
+                    <br>
+                    {{x}}
+                    <br>
+                {% endif %}
+                <br>
+               
                 <label for = "username">Username</label>
                 <input type = "text" class = "form-control" name = "username" required>
                 <br>

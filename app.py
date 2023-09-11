@@ -136,7 +136,7 @@ def book():
         #mailing the admin
         from_mail = "captainappointease@gmail.com"
         subject = 'Apointment alert'
-        message = f'Appointment made by \nname: {data[0]}\nemail: {data[1]}\nphno: {data[3]}\ndate: {data[4]}\nbooked_date: {data[5]}'
+        message = f'Appointment made by \nname: {data[0]}\nemail: {data[1]}\nphno: {data[2]}\ndate: {data[3]}\nbooked_date: {data[4]}'
         msg = MIMEMultipart()
         msg['From'] = from_mail
         msg['To'] = admin_mail[0][0]
@@ -193,7 +193,7 @@ def admin():
     if session['userid'] == 1:
         if request.method == "GET":
             today = datetime.now()
-            dayslist = [(today + timedelta(i)).strftime("%d-%m-%y") for i in range(7)]
+            dayslist = [(today + timedelta(i)).strftime("%d-%m-%y") for i in range(1,8)]
             days ={}
             for i in range(1,8):
                 days[str(i)] = dayslist[i-1]
@@ -221,9 +221,18 @@ def admin():
                     a = (daylist[i-1],)
                     db.execute("INSERT INTO available(date) VALUES(?)", a)
                     connection.commit()
-                    connection.close()
+            connection.close()
             return redirect(url_for('admin'))
     else:
         return render_template("index.html", admin_alert = 'true')
     
 
+@app.route("/dashboard", methods = ["GET", "POSt"])
+def dashboard():
+    if session['logged_in']:
+        user_id = session["userid"]
+        connection = sqlite3.connect("appointments.db")
+        db = connection.cursor()
+        user_details = list(db.execute("SELECT * FROM users WHERE id = ?",(user_id,)))
+        print(user_details)
+        return render_template("dashboard.html", user_details = user_details[0])

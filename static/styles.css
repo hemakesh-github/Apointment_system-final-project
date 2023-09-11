@@ -20,33 +20,23 @@ header {
     margin-top: 60px;
     border-radius: 25px;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6);
+    
 
 }
 
 #availability {
     visibility: hidden;
 }
-/* #container {
-    width: 100%;
-    height: 100vh;
-    align-items: center;
-    justify-content: center;
-} */
 
-/* #pop-up{
-    width: 400px;
-    background: blue;
-    border-radius: 10px;
-    position: absolute;
-    top: 0%;
-    left: 50%;
-    transform: translate(-50%,-50%) scale(0.1);
-    text-align: center;
-    padding: 0 30px 30px;
-    color: #333;
-    visibility: hidden;
+#login_img {
+    display: inline;
+    margin-top: -50%;
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    
+}
 
-} */
 
 
 
@@ -56,13 +46,17 @@ header {
     justify-content: center;
     align-items: center;
     height: 85vh;
+    text-align: center;
+    margin-top: 2px;
     
 }
 
 #login div {
-    padding: 20px;
+    padding: 10px 40px 30px 40px;
     border: 1px solid black;
     box-shadow: 0 1px 20px 0 rgba(0,0,0,.14);
+    margin-top: 2px;
+    
 }
  
 #brand_name{
