@@ -23,18 +23,17 @@ def available_dates():
     today = datetime.now()
     avail_days_list = list(db.execute("SELECT * FROM available ORDER BY id DESC"))
     def sort_by_date(item):
-        return datetime.strptime(item[1], "%d-%m-%y")
+        return datetime.strptime(item[1][:8], "%d-%m-%y")
     
     avail_days_sorted = sorted(avail_days_list, key=sort_by_date)
     avail_days = []
-    for day in avail_days_sorted:
-        d = datetime.strptime(day[1], "%d-%m-%y")
+    for daydata in avail_days_sorted:
+        d = datetime.strptime(daydata[1][:8], "%d-%m-%y")
         if d > today:
             day = d.strftime("%A")
             booked_day = datetime.strftime(d, "%d-%m-%y")
-            booked_day = booked_day + '(' + day + ')'
+            booked_day = (booked_day + '(' + day + ')',daydata[2])
             avail_days.append(booked_day)
-    print(avail_days)
     connection.close()
     return avail_days
        
@@ -45,9 +44,10 @@ def index():
     if request.method == "GET":
         return render_template("index.html")
     
-
+#login route
 @app.route("/login", methods =["POST", "GET"])
 def login():
+    
     if request.method == "GET":
         return render_template("login.html")
     else:
@@ -67,7 +67,8 @@ def login():
         session["logged_in"] = True
         return redirect("index.html")
     
-
+        
+#logout
 @app.route("/logout", methods = ["POST", "GET"])
 def logout():
     #logging out clearing session
@@ -76,7 +77,7 @@ def logout():
     session.pop("useid", None)
     return render_template("index.html")
 
-
+#register user
 @app.route("/register", methods = ["POST", "GET"])
 def register():
     if request.method == "GET":
@@ -109,6 +110,7 @@ def register():
         connection.close()
         return redirect("/")
 
+#book appointment
 @app.route("/book",methods = ["POST","GET"])
 def book():
     if request.method == "POST":
@@ -129,7 +131,14 @@ def book():
         data.append(user_id)
         #inserting booked data into database
         db.execute("INSERT INTO booked(name, email, phno, date, booked_data, userid) VALUES( ?, ?, ?, ?, ?, ? )", tuple(data))
+        db.execute("UPDATE available SET appointments = appointments - 1 WHERE date = ?", (booked_day,))
+        
+        appointments = list(db.execute("SELECT appointments FROM available WHERE date = ?", (booked_day,)))
+        print(booked_day)
+        print(appointments)
+       
         admin_mail = list(db.execute("SELECT email FROM users WHERE id == 1;"))
+        
         print(admin_mail[0][0])
         connection.commit()
         connection.close()
@@ -157,23 +166,31 @@ def book():
 
         finally:
             server.quit()
-        return 'APPOINTMENT SUCCESSFUL'
+        return render_template("index.html", success = "true")
     else:
         return redirect(url_for('index'))
-    
+
+
+#available slots
 @app.route("/available", methods = ["GET", "POST"])
 def available():
     if request.method == "POST":
         avail_days = available_dates()
+        availDays = []
+        print(avail_days)
+        for d in avail_days:
+            if d[1] > 0:
+                availDays.append(d)
         email = request.form.get('email')
         name = request.form.get('name')
         phno = request.form.get('phno')
         session["temp_data"] = [name, email, phno]
-        return render_template("index.html", avail_days=avail_days, visibility = True)
+        return render_template("index.html", avail_days=availDays, visibility = True)
     else:
         return render_template("index.html", visibility = False)
 
- 
+
+#appointment history
 @app.route("/history",methods = ["POST","GET"])
 def history():
     if session['logged_in'] == True:
@@ -186,40 +203,44 @@ def history():
         return render_template("history.html", history = list(history))
     else:
         return render_template("index.html", logged_in = 'false')
-     
+
+
+#admin route
 @app.route("/admin", methods = ["GET", "POST"])
 def admin():
     days =[]
     if session['userid'] == 1:
         if request.method == "GET":
             today = datetime.now()
-            dayslist = [(today + timedelta(i)).strftime("%d-%m-%y") for i in range(1,8)]
+            dayslist = [(today + timedelta(i)).strftime("%d-%m-%y") + '(' + (today + timedelta(i)).strftime("%A") + ')' for i in range(1,8)]
             days ={}
             for i in range(1,8):
                 days[str(i)] = dayslist[i-1]
             avail_days = available_dates()
-            return render_template("admin.html",days = days, avail_days = avail_days)
+            avail = []
+            for i in avail_days:
+                avail.append(i[0])
+            
+            return render_template("admin.html",days = days, avail_days = avail_days, avail = avail)
         else:
             daylist = []
             connection = sqlite3.connect('appointments.db')
             db = connection.cursor()
             available = list(db.execute("SELECT date FROM available;"))
-            print(available)
             if len(available) >= 7:
                 db.execute("DELETE FROM available;")
                 db.execute("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'available';")
                 connection.commit()
-            db.execute("CREATE TABLE IF NOT EXISTS available(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT)")
+            db.execute("CREATE TABLE IF NOT EXISTS available(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, appointments INTEGER)")
             for i in range(1,8):
                 d = request.form.get(str(i))
                 if (d,) not in available:
                     daylist.append(d)
-
                 else:
                     daylist.append(None)
                 if daylist[i-1] != None:
-                    a = (daylist[i-1],)
-                    db.execute("INSERT INTO available(date) VALUES(?)", a)
+                    a = (daylist[i-1],15)
+                    db.execute("INSERT INTO available(date, appointments) VALUES(?, ?)", a)
                     connection.commit()
             connection.close()
             return redirect(url_for('admin'))
@@ -227,6 +248,7 @@ def admin():
         return render_template("index.html", admin_alert = 'true')
     
 
+#dashboard
 @app.route("/dashboard", methods = ["GET", "POSt"])
 def dashboard():
     if session['logged_in']:
@@ -236,3 +258,33 @@ def dashboard():
         user_details = list(db.execute("SELECT * FROM users WHERE id = ?",(user_id,)))
         print(user_details)
         return render_template("dashboard.html", user_details = user_details[0])
+    
+#change password
+@app.route("/changepass", methods = ["POST", "GET"])
+def updatepass():
+    if request.method == "POST":
+        connection = sqlite3.connect("appointments.db")
+        db = connection.cursor()
+        hashed_password = generate_password_hash(request.form.get("password"))
+        print(hashed_password)
+
+        if not check_password_hash(hashed_password, request.form.get("confirm")):
+            return render_template("register.html", x = "PASSWORDS DONOT MATCH")
+        elif session['logged_in']:
+            user_id = session['userid']
+            user = list(db.execute("SELECT id,email FROM users WHERE id = ?", (user_id,)))
+        else:
+            username = request.form.get("username")
+            
+            user = list(db.execute("SELECT id,email FROM users WHERE username = ?", (username,)))
+            if not user:
+                return render_template("changepass.html", x = "User not found")
+        print(user)
+        db.execute("UPDATE users SET password = ? WHERE id = ? and email = ?",(hashed_password, user[0][0], user[0][1]))
+        connection.commit()
+        if session["logged_in"]:
+            return render_template("index.html")
+        return render_template("login.html")
+    else:
+        return render_template("changepass.html")
+    

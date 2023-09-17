@@ -2,7 +2,7 @@
 {% block main %}
     <div class="container" id = "container">
         <div class = "row">
-            <section  class="col d-flex" id = "right">
+            <section  class="col d-flex col-md-6 col-12" id = "right">
                 <div id = "available" class = "col d-flex align-items-center justify-content-center">
                     <table class = "table table-striped" id = "availability" >
                         <form action = "/book" method="post">
@@ -12,10 +12,17 @@
                                 <td>Schedule</td>
                             </tr>
                             <tbody>
+                                <tr>
+                                    {% if not avail_days %}
+                                        <td><h2>No available dates</h2></td>
+                                    {% endif %}
+                                </tr>
                                 {% for day in avail_days %}
+                                                                                                        
                                     <tr>
-                                        <td>{{day}}</td>
-                                        <td><button type = "submit"  value = {{day}} name = "book">Book</button></td>
+                                        
+                                        <td>{{day[0]}}</td>
+                                        <td><button type = "submit"  value = {{day[0]}} name = "book">Book</button></td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -34,7 +41,7 @@
                 </script>
             {% endif %}
         
-            <section class="col d-flex" id = "left">
+            <section class="col d-flex col-md-6 col-12" id = "left">
                 <div class="form-box d-flex justify-content-center align-items-center" >
                     <form action = "/available" method="post" id = "book_form" class = "book_form">
                         <div class="form-group">
@@ -60,4 +67,10 @@
             </section>
         </div>
     </div>
+    {% if success %}
+        <script>
+            alert("APPOINTMENT SUCCESSFULL");
+        </script>
+    {% endif %}
+    
 {% endblock %}

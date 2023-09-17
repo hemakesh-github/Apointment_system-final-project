@@ -20,11 +20,9 @@
                         {% for day in days %}
                             <tr>
                                 <td>{{days[day]}}</td>
-                        
                             
                                 <td style = "text-align: right; ">
-                                    <label><input type = "checkbox" name = {{day}} value = {{days[day]}}> available</label>
-                                    
+                                    <label><input type = "checkbox" name = {{day}} value = {{days[day]}} {% if days[day] in avail %} checked disabled{% endif %}> available</label>     
                                 </td>
                             </tr>
                             
@@ -44,14 +42,14 @@
                 <form action = "/book" method="post">
                     <thead>
                         <tr>
-                            <th style = "text-align: center;"">Chosen Dates</th>
-                            
+                            <th style = "text-align: center;">Chosen Dates</th>
+                            <th style = "text-align: center;">available appointments</th>
                         </tr>
                         <tbody>
                             {% for day in avail_days %}
                                 <tr>
-                                    <td style = "text-align: center;"">{{day}}</td>
-                                    
+                                    <td style = "text-align: center;">{{day[0]}}</td>
+                                    <td style = "text-align: center;">{{day[1]}}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>

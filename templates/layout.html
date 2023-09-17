@@ -6,6 +6,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href = "static\styles.css" rel = "stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300&family=Poppins:wght@800&family=Roboto+Slab:wght@300&display=swap" rel="stylesheet">
     <title>Document</title>
     <script src = "static\script.js"></script>
 
@@ -15,12 +18,12 @@
         <div class = "col">
             <div>
                 <a href = "/index.html" id = "brand">
-                    <img src = "static\images\logo1.png" style = "width: 11v; height: 11vh; display: inline;" alt = "Logo" >
-                    <h4 id = "brand_name">Brand</br>Name</h4>
+                    <img src = "static\images\captain.jpg" style = "width: 11v; height: 11vh; display: inline;" alt = "Logo" >
+                    <h4 id = "brand_name" style="color: red;">Captain</br><span style="color: blue;">Appointease</span></h4>
                 </a>
             </div>
         </div>
-        
+    
         <nav id = "nav" class = "col">
             {% if session.logged_in %}
                 <a class = "nav-link" href ="/logout">Logout</a>
@@ -34,7 +37,7 @@
                 <a class = "nav-link" href = "/register">Register</a>
             {% endif %}
         </nav>
-        </div>
+        
     </header>
     <main>
        {% block main %}{% endblock %}

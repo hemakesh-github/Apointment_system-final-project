@@ -3,15 +3,24 @@ header {
     box-shadow: 0 1px 20px 0 rgba(0,0,0,.14);
     display: flex;
 }
+
 #nav {
     display: flex;
+    flex-wrap: wrap;
     gap: 1em;
     justify-content: right;
+    flex-direction: row;
     align-items: center;
     text-decoration: none;
     height : 13vh;
     padding: 0px;
     margin: 0cm 1cm 0cm 0cm;
+    font-family: 'Roboto Slab', serif;
+}
+
+main {
+    font-family: 'Oxygen', sans-serif;
+    
 }
 
 #book,#book_form {
@@ -38,10 +47,7 @@ header {
 }
 
 
-
-
-
-#login {
+#login, #updatepass {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -51,17 +57,16 @@ header {
     
 }
 
-#login div {
+#updatepass div {
     padding: 10px 40px 30px 40px;
     border: 1px solid black;
     box-shadow: 0 1px 20px 0 rgba(0,0,0,.14);
     margin-top: 2px;
-    
 }
  
 #brand_name{
     padding: 10px;
-    color :blue;
+    font-family: 'Poppins', sans-serif;
 } 
 
 #right {
@@ -70,6 +75,8 @@ header {
     background-image: url("appointment.svg");
     background-repeat: no-repeat;
     background-position: center;
+    background-size: contain;
+    
 }
 
 #brand {
@@ -86,3 +93,4 @@ a {
     display: flex;
     justify-content: flex-start;
 }
+

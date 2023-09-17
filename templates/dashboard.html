@@ -2,11 +2,26 @@
 {% block main %}
 
 <div>
-    
-    <div>User name: {{user_details[1]}}</div>
-    <div>Email: {{user_details[3]}}</div>
-    
-    
+    <section class = "container d-flex justify-content-center">
+        <table class = "table table-striped" style = "border: solid black 2px; padding: 0px; margin-top: 60px; width : 450px; height : auto;">
+                <tr>
+                    <td><b>User Name: </b></td>
+                    <td>{{user_details[1]}}</td>
+                </tr>
+                <tr>
+                    <td><b>E-Mail: </b></td>
+                    <td>{{user_details[3]}}</td>
+                </tr>
+                <tr>
+                    <td style = "text-align: center;" colspan = "2">
+                        <form action = "/changepass">
+                            <button type = "submit" >Change Password</button>
+                        </form>
+                    </td>
+                </tr>
+        </table>
+        
+    </section>   
 </div>
 
 {% endblock %}
