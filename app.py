@@ -124,9 +124,12 @@ def book():
         data.append(booked_day)
         data.append(booking_day)
         #checking if logged in or not and taking user_id
-        if (session["logged_in"] == True):
-            user_id = session['userid']
-        else:
+        try:
+            if (session["logged_in"] == True):
+                user_id = session['userid']
+            else:
+                user_id = None
+        except:
             user_id = None
         data.append(user_id)
         #inserting booked data into database

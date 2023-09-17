@@ -94,3 +94,12 @@ a {
     justify-content: flex-start;
 }
 
+#changepass {
+    border-radius: 5px;
+    background-color: rgba(223, 112, 75, 0.727);
+    
+}
+
+#changepass:hover {
+    background-color: rgba(4, 114, 4, 0.877);
+}
