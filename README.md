@@ -1,2 +1,2 @@
-# Apointment_system(final project
+# Apointment_system(final project)
  cs50 final project
