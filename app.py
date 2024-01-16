@@ -15,7 +15,7 @@ app.debug = True
 
 if __name__ == '__main__':
     app.run(debug=True)
-
+    
 #function to get all the available dates
 def available_dates():
     connection = sqlite3.connect('appointments.db')
@@ -272,8 +272,8 @@ def updatepass():
         print(hashed_password)
 
         if not check_password_hash(hashed_password, request.form.get("confirm")):
-            return render_template("register.html", x = "PASSWORDS DONOT MATCH")
-        elif session['logged_in']:
+            return render_template("register.html", x = "PASSWORDS DO NOT MATCH")
+        elif "logged_in" in session.keys() and session["logged_in"]:
             user_id = session['userid']
             user = list(db.execute("SELECT id,email FROM users WHERE id = ?", (user_id,)))
         else:
@@ -285,7 +285,7 @@ def updatepass():
         print(user)
         db.execute("UPDATE users SET password = ? WHERE id = ? and email = ?",(hashed_password, user[0][0], user[0][1]))
         connection.commit()
-        if session["logged_in"]:
+        if "logged_in" in session.keys() and session["logged_in"]:
             return render_template("index.html")
         return render_template("login.html")
     else:

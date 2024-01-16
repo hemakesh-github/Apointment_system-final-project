@@ -29,8 +29,6 @@ main {
     margin-top: 60px;
     border-radius: 25px;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6);
-    
-
 }
 
 #availability {
@@ -43,11 +41,20 @@ main {
     width: 60px;
     height: 60px;
     background-color: white;
-    
 }
 
 
-#login, #updatepass {
+#updatepass {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 85vh;
+    text-align: center;
+    margin-top: 2px;
+    
+}
+
+#login{
     display: flex;
     justify-content: center;
     align-items: center;
