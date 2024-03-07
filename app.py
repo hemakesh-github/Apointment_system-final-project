@@ -13,8 +13,7 @@ app.secret_key = 'a4ad3bb3f36eff1b4d0e0fc83f1f4a0e3f0d76d712eb3bacad3646ab063738
 
 app.debug = True
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
     
 #function to get all the available dates
 def available_dates():
